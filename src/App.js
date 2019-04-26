@@ -18,8 +18,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(process.env.apiKey);
-    console.log(process.env.authDomain);
+    console.log(process.env.PUBLIC_URL.apiKey);
+    console.log(process.env.NODE_ENV.authDomain);
     console.log(process.env.databaseURL);
     console.log(process.env.projectId);
     console.log(process.env.storageBucket);
