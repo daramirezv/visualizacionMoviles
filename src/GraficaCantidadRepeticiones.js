@@ -14,7 +14,6 @@ class GraficaCantidadRepeticiones extends Component {
     this.props.objetosEjercicios.forEach(ejercicios => {
 
       var num = ejercicios.data().cantidadRepeticiones;
-      console.log(arregloTemp[num]);
       if (arregloTemp[num + " repeticiones"] == null) {
         arregloTemp[num + " repeticiones"] = 1;
       }

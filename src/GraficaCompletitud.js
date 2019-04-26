@@ -16,7 +16,6 @@ class GraficaCompletitud extends Component {
     this.props.objetosEjercicios.forEach(ejercicios => {
 
       var num = ejercicios.data().completitud;
-      console.log(arregloTemp[num]);
       if (num === false) {
         arregloTemp[1]++;
       }

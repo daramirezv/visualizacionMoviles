@@ -28,7 +28,7 @@ class Localizaciones extends Component {
 
         return localizacionesTemp.map((aplicacion) => {
             return (
-                <tr>
+                <tr key={aplicacion.nombre}>
                     <td>{aplicacion.nombre}</td>
                     <td>{aplicacion.latitud}</td>
                     <td>{aplicacion.longitud}</td>
@@ -41,8 +41,9 @@ class Localizaciones extends Component {
 
         return (
             <div>
-                <table class="table">
-                    <thead class="thead-dark">
+                <h3 className = "infoInicial">Clínicas de Fisioterapia</h3>
+                <table className="table">
+                    <thead className="thead-dark">
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Latitud</th>

@@ -40,8 +40,7 @@ class App extends Component {
         var arregloObjetos = [];
         querySnapshot.forEach(function (doc) {
           arregloObjetos.push(doc);
-          console.log("wtf");
-          console.log(doc.id, " => ", doc.data());
+          //console.log(doc.id, " => ", doc.data());
         });
         this.setState({ objetosEjercicios: arregloObjetos, cargoEjercicios: true });
       }.bind(this))
@@ -52,11 +51,10 @@ class App extends Component {
     docRefLocalizaciones
       .get()
       .then(function (querySnapshot) {
-        console.log(querySnapshot);
-
         var arregloObjetos = [];
         querySnapshot.forEach(function (doc) {
           arregloObjetos.push(doc);
+          //console.log(doc.id, " => ", doc.data());
         });
         this.setState({ objetosSitios: arregloObjetos, cargoSitios: true });
       }.bind(this))
@@ -90,19 +88,19 @@ class App extends Component {
               <div className="col-sm">
                 <GraficaDate objetosEjercicios={this.state.objetosEjercicios} />
               </div>
-              <div class="col-sm">
+              <div className="col-sm">
                 <GraficaDuracion objetosEjercicios={this.state.objetosEjercicios} />
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-sm">
+            <div className="row">
+              <div className="col-sm">
                 <GraficaTipo objetosEjercicios={this.state.objetosEjercicios} />
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-sm">
+            <div className="row">
+              <div className="col-sm">
                 <Localizaciones objetosSitios={this.state.objetosSitios} />
               </div>
             </div>
