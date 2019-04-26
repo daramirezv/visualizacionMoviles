@@ -19,12 +19,12 @@ class App extends Component {
 
   componentDidMount() {
     const config = {
-      apiKey: process.env.apiKey,
-      authDomain: process.env.authDomain,
-      databaseURL: process.env.databaseURL,
-      projectId: process.env.projectId,
-      storageBucket: process.env.storageBucket,
-      messagingSenderId: process.env.messagingSenderId
+      apiKey: "" + process.env.NODE_ENV.apiKey,
+      authDomain: "" + process.env.authDomain,
+      databaseURL: "" + process.env.databaseURL,
+      projectId: "" + process.env.projectId,
+      storageBucket: "" + process.env.storageBucket,
+      messagingSenderId: "" + process.env.messagingSenderId
     };
 
     firebase.initializeApp(config);
