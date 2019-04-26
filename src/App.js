@@ -19,7 +19,8 @@ class App extends Component {
 
   componentDidMount() {
     const config = {
-      apiKey: "AIzaSyAmkfgl5KPLqgmpNPSrgmXb_uPk5_nENfg",
+      //apiKey: "AIzaSyAmkfgl5KPLqgmpNPSrgmXb_uPk5_nENfg",
+      apiKey: process.env.apiKey,
       authDomain: "fisiapp-26399.firebaseapp.com",
       databaseURL: "https://fisiapp-26399.firebaseio.com",
       projectId: "fisiapp-26399",
