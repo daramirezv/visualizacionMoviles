@@ -18,6 +18,13 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log(process.env.apiKey);
+    console.log(process.env.authDomain);
+    console.log(process.env.databaseURL);
+    console.log(process.env.projectId);
+    console.log(process.env.storageBucket);
+    console.log(process.env.messagingSenderId);
+
     const config = {
       apiKey: "" + process.env.apiKey,
       authDomain: "" + process.env.authDomain,
