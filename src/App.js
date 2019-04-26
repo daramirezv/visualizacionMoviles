@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount() {
     const config = {
-      apiKey: "" + process.env.NODE_ENV.apiKey,
+      apiKey: "" + process.env.apiKey,
       authDomain: "" + process.env.authDomain,
       databaseURL: "" + process.env.databaseURL,
       projectId: "" + process.env.projectId,
