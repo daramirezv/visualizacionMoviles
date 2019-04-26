@@ -19,13 +19,12 @@ class App extends Component {
 
   componentDidMount() {
     const config = {
-      //apiKey: "AIzaSyAmkfgl5KPLqgmpNPSrgmXb_uPk5_nENfg",
       apiKey: process.env.apiKey,
-      authDomain: "fisiapp-26399.firebaseapp.com",
-      databaseURL: "https://fisiapp-26399.firebaseio.com",
-      projectId: "fisiapp-26399",
-      storageBucket: "fisiapp-26399.appspot.com",
-      messagingSenderId: "754912932866"
+      authDomain: process.env.authDomain,
+      databaseURL: process.env.databaseURL,
+      projectId: process.env.projectId,
+      storageBucket: process.env.storageBucket,
+      messagingSenderId: process.env.messagingSenderId
     };
 
     firebase.initializeApp(config);
