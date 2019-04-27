@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
-class GraficaTipo extends Component {
+class GraficaTamanoClinicas extends Component {
 
     constructor(props) {
         super(props);
@@ -11,9 +11,9 @@ class GraficaTipo extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosEjercicios.forEach(ejercicios => {
+        this.props.objetosSitios.forEach(sitios => {
 
-            var num = ejercicios.data().tipo;
+            var num = sitios.data().tamaño;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -32,17 +32,10 @@ class GraficaTipo extends Component {
             labels: Object.keys(this.state.valores),
             datasets: [{
                 data: Object.values(this.state.valores),
-                backgroundColor:
-                    'rgba(255, 99, 132, 0.2)'
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)']
                 ,
                 borderColor:
-                    'rgba(255, 99, 132, 1)'
-                ,
-                hoverBackgroundColor:
-                    'rgba(54, 162, 235, 0.2)'
-                ,
-                hoverBorderColor:
-                    'rgba(54, 162, 235, 1)'
+                    ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)']
                 ,
                 borderWidth: 1
 
@@ -63,23 +56,16 @@ class GraficaTipo extends Component {
             },
             title: {
                 display: true,
-                text: 'Tipos de Ejercicio',
+                text: 'Tamaño de las Fisioterapeutas',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            maintainAspectRatio: false
         }
 
         return (
             <div>
-                <Bar
+                <Doughnut
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +75,4 @@ class GraficaTipo extends Component {
         );
     }
 }
-export default GraficaTipo;
+export default GraficaTamanoClinicas;

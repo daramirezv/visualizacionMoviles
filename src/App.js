@@ -7,14 +7,21 @@ import GraficaDate from './GraficaDate';
 import GraficaDuracion from './GraficaDuracion';
 import GraficaTipo from './GraficaTipo';
 import Localizaciones from './Localizaciones';
+import GraficaParteCuerpo from './GraficaParteCuerpo';
+import GraficaPrecioClinicas from './GraficaPrecioClinicas';
+import GraficaTamanoClinicas from './GraficaTamanoClinicas';
+import GraficaTipoClinicas from './GraficaTipoClinicas';
+import Doctores from './Doctores';
+import GraficaEspecializacionDoctores from './GraficaEspecializacionDoctores';
+import GraficaGeneroDoctores from './GraficaGeneroDoctores';
+import GraficaEdadDoctores from './GraficaEdadDoctores';
+import GraficaTipoDoctores from './GraficaTipoDoctores';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { cargoEjercicios: false, cargoSitios: false, objetosEjercicios: [], objetosSitios: [] };
-    //this.metodo = this.metodo.bind(this);
-
+    this.state = { cargoEjercicios: false, cargoSitios: false, cargoDoctores: false, objetosEjercicios: [], objetosSitios: [], objetosDoctores: [] };
   }
 
   componentDidMount() {
@@ -33,6 +40,7 @@ class App extends Component {
 
     var docRefEjercicios = db.collection("ColeccionEjercicios").doc("Usuario1").collection("Ejercicios");
     var docRefLocalizaciones = db.collection("ColeccionLocaciones").doc("Bogota").collection("Sitios");;
+    var docRefDoctores = db.collection("ColecciónDoctores").doc("Bogota").collection("Doctores");;
 
     docRefEjercicios
       .get()
@@ -61,19 +69,57 @@ class App extends Component {
       .catch(function (error) {
         console.log("Error getting documents: ", error);
       });
+
+    docRefDoctores
+      .get()
+      .then(function (querySnapshot) {
+        var arregloObjetos = [];
+        querySnapshot.forEach(function (doc) {
+          arregloObjetos.push(doc);
+          //console.log(doc.id, " => ", doc.data());
+        });
+        this.setState({ objetosDoctores: arregloObjetos, cargoDoctores: true });
+      }.bind(this))
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
   }
 
   render() {
 
     return (
       <div className="col-md-12">
-        {this.state.cargoSitios && this.state.cargoEjercicios ?
+        {this.state.cargoSitios && this.state.cargoEjercicios && this.state.cargoDoctores ?
           <div>
             <h1 className="jumbotron" id="titulo">FisiApp</h1>
-            <h4 className="infoInicial">Cantidad de usuarios registrados: 1</h4>
-            <h4 className="infoInicial">Cantidad de ciudades registradas: 1</h4>
-            <h4 className="infoInicial">Cantidad de ejercicios registrados: {this.state.objetosEjercicios.length}</h4>
-            <h4 className="infoInicial">Cantidad de sitios de fisioterapia registrados: {this.state.objetosSitios.length}</h4>
+            <div className="row">
+              <div className="col-sm">
+                <table className="table table-striped">
+                  <tbody>
+                    <tr>
+                      <td>Cantidad de usuarios con ejercicios registrados</td>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td>Cantidad de ciudades registradas</td>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td>Cantidad de ejercicios registrados</td>
+                      <td>{this.state.objetosEjercicios.length}</td>
+                    </tr>
+                    <tr>
+                      <td>Cantidad de sitios de fisioterapia registrados</td>
+                      <td>{this.state.objetosSitios.length}</td>
+                    </tr>
+                    <tr>
+                      <td>Cantidad de doctores de fisioterapia registrados</td>
+                      <td>{this.state.objetosDoctores.length}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
             <div className="row">
               <div className="col-sm">
@@ -97,11 +143,53 @@ class App extends Component {
               <div className="col-sm">
                 <GraficaTipo objetosEjercicios={this.state.objetosEjercicios} />
               </div>
+              <div className="col-sm">
+                <GraficaParteCuerpo objetosEjercicios={this.state.objetosEjercicios} />
+              </div>
             </div>
 
             <div className="row">
               <div className="col-sm">
                 <Localizaciones objetosSitios={this.state.objetosSitios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <GraficaPrecioClinicas objetosSitios={this.state.objetosSitios} />
+              </div>
+              <div className="col-sm">
+                <GraficaTamanoClinicas objetosSitios={this.state.objetosSitios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <GraficaTipoClinicas objetosSitios={this.state.objetosSitios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <Doctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <GraficaEspecializacionDoctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+              <div className="col-sm">
+                <GraficaGeneroDoctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <GraficaEdadDoctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+              <div className="col-sm">
+                <GraficaTipoDoctores objetosDoctores={this.state.objetosDoctores} />
               </div>
             </div>
 

@@ -24,9 +24,65 @@ class GraficaDate extends Component {
             }
         });
 
+        var arregloMes = [];
+        arregloMes["Enero"] = 0;
+        arregloMes["Febrero"] = 0;
+        arregloMes["Marzo"] = 0;
+        arregloMes["Abril"] = 0;
+        arregloMes["Mayo"] = 0;
+        arregloMes["Junio"] = 0;
+        arregloMes["Julio"] = 0;
+        arregloMes["Agosto"] = 0;
+        arregloMes["Septiembre"] = 0;
+        arregloMes["Octubre"] = 0;
+        arregloMes["Noviembre"] = 0;
+        arregloMes["Diciembre"] = 0;
+
+        for (var x = 1; x < 13; x++) {
+            if (arregloTemp["mes " + x] != null) {
+                switch ("mes " + x) {
+                    case "mes 1":
+                        arregloMes["Enero"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 2":
+                        arregloMes["Febrero"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 3":
+                        arregloMes["Marzo"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 4":
+                        arregloMes["Abril"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 5":
+                        arregloMes["Mayo"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 6":
+                        arregloMes["Junio"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 7":
+                        arregloMes["Julio"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 8":
+                        arregloMes["Agosto"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 9":
+                        arregloMes["Septiembre"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 10":
+                        arregloMes["Octubre"] = arregloTemp["mes " + x];
+                        break;
+                    case "mes 11":
+                        arregloMes["Noviembre"] = arregloTemp["mes " + x];
+                        break;
+                    default:
+                        arregloMes["Diciembre"] = arregloTemp["mes " + x];
+                }
+            }
+        }
+
         arregloTemp.sort();
 
-        this.setState({ valores: arregloTemp });
+        this.setState({ valores: arregloMes });
     }
 
     render() {
@@ -58,7 +114,7 @@ class GraficaDate extends Component {
             },
             title: {
                 display: true,
-                text: 'Ejercicios por mes',
+                text: 'Ejercicios Publicados por Mes',
                 fontSize: 30,
                 fontColor: '#000'
             },

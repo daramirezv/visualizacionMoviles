@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import './App.css';
 import { Pie } from 'react-chartjs-2';
 
-class GraficaCompletitud extends Component {
+class GraficaGeneroDoctores extends Component {
 
   constructor(props) {
     super(props);
@@ -13,10 +13,10 @@ class GraficaCompletitud extends Component {
     var arregloTemp = [];
     arregloTemp[0] = 0;
     arregloTemp[1] = 0;
-    this.props.objetosEjercicios.forEach(ejercicios => {
+    this.props.objetosDoctores.forEach(doctor => {
 
-      var num = ejercicios.data().completitud;
-      if (num === false) {
+      var num = doctor.data().Género;
+      if (num === "Masculino") {
         arregloTemp[1]++;
       }
       else {
@@ -30,7 +30,7 @@ class GraficaCompletitud extends Component {
   render() {
 
     const data = {
-      labels: ["True", "False"],
+      labels: ["Femenino", "Masculino"],
       datasets: [{
         data: this.state.valores,
         backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)']
@@ -57,7 +57,7 @@ class GraficaCompletitud extends Component {
       },
       title: {
         display: true,
-        text: 'Ejercicios Completados',
+        text: 'Género de los Doctores',
         fontSize: 30,
         fontColor: '#000'
       },
@@ -76,4 +76,4 @@ class GraficaCompletitud extends Component {
     );
   }
 }
-export default GraficaCompletitud;
+export default GraficaGeneroDoctores;

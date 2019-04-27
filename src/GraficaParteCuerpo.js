@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bubble } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-class GraficaDuracion extends Component {
+class GraficaParteCuerpo extends Component {
 
     constructor(props) {
         super(props);
         this.state = { titulos: [], valores: [] }
     }
 
-
     componentWillMount() {
         var arregloTemp = [];
         this.props.objetosEjercicios.forEach(ejercicios => {
 
-            var num = ejercicios.data().duracion;
+            var num = ejercicios.data().parteCuerpo;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -24,33 +23,26 @@ class GraficaDuracion extends Component {
             }
         });
 
-        var objeto = class myObject {
-            constructor(x, y, r) {
-                this.x = x;
-                this.y = y;
-                this.r = r;
-            }
-        }
-
-        var solucion = [];
-        var arrayValores = Object.keys(arregloTemp);
-
-        arrayValores.forEach(element => {
-            solucion.push(new objeto(element, arregloTemp[element], 15));
-        });
-
-        this.setState({ valores: solucion });
+        this.setState({ valores: arregloTemp });
     }
 
     render() {
 
         const data = {
+            labels: Object.keys(this.state.valores),
             datasets: [{
                 data: Object.values(this.state.valores),
-                backgroundColor: 'rgba(255, 99, 132, 1)'
+                backgroundColor:
+                    'rgba(255, 99, 132, 0.2)'
                 ,
                 borderColor:
                     'rgba(255, 99, 132, 1)'
+                ,
+                hoverBackgroundColor:
+                    'rgba(54, 162, 235, 0.2)'
+                ,
+                hoverBorderColor:
+                    'rgba(54, 162, 235, 1)'
                 ,
                 borderWidth: 1
 
@@ -71,40 +63,23 @@ class GraficaDuracion extends Component {
             },
             title: {
                 display: true,
-                text: 'Duración de los Ejercicios',
+                text: 'Parte del Cuerpo Tratada por los Ejercicios',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false
-            ,
+            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Cantidad de Ejercicios',
-                        fontSize: 20
-                    }
-                }],
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Minutos',
-                        fontSize: 20
+                    ticks: {
+                        beginAtZero: true
                     }
                 }]
-            },
-            tooltips: {
-                callbacks: {
-                    label: function (tooltipItem, data) {
-                        return tooltipItem.xLabel + " minutos " + tooltipItem.yLabel + " veces";
-                    }
-                }
             }
         }
 
         return (
             <div>
-                <Bubble
+                <Bar
                     data={data}
                     width={100}
                     height={500}
@@ -114,4 +89,4 @@ class GraficaDuracion extends Component {
         );
     }
 }
-export default GraficaDuracion;
+export default GraficaParteCuerpo;

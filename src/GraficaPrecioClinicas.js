@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import './App.css';
 import { Bar } from 'react-chartjs-2';
 
-class GraficaTipo extends Component {
+class GraficaPrecioClinicas extends Component {
 
     constructor(props) {
         super(props);
@@ -11,9 +11,9 @@ class GraficaTipo extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosEjercicios.forEach(ejercicios => {
+        this.props.objetosSitios.forEach(sitios => {
 
-            var num = ejercicios.data().tipo;
+            var num = sitios.data().precio;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -63,7 +63,7 @@ class GraficaTipo extends Component {
             },
             title: {
                 display: true,
-                text: 'Tipos de Ejercicio',
+                text: 'Precio de las Fisioterapeutas',
                 fontSize: 30,
                 fontColor: '#000'
             },
@@ -89,4 +89,4 @@ class GraficaTipo extends Component {
         );
     }
 }
-export default GraficaTipo;
+export default GraficaPrecioClinicas;

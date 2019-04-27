@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Polar } from 'react-chartjs-2';
 
-class GraficaTipo extends Component {
+class GraficaTipoClinicas extends Component {
 
     constructor(props) {
         super(props);
@@ -11,9 +11,9 @@ class GraficaTipo extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosEjercicios.forEach(ejercicios => {
+        this.props.objetosSitios.forEach(sitios => {
 
-            var num = ejercicios.data().tipo;
+            var num = sitios.data().tipo;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -33,10 +33,10 @@ class GraficaTipo extends Component {
             datasets: [{
                 data: Object.values(this.state.valores),
                 backgroundColor:
-                    'rgba(255, 99, 132, 0.2)'
+                    ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)']
                 ,
                 borderColor:
-                    'rgba(255, 99, 132, 1)'
+                    ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)']
                 ,
                 hoverBackgroundColor:
                     'rgba(54, 162, 235, 0.2)'
@@ -63,23 +63,16 @@ class GraficaTipo extends Component {
             },
             title: {
                 display: true,
-                text: 'Tipos de Ejercicio',
+                text: 'Cantidad de Fisioterapeutas por Tipo',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            maintainAspectRatio: false
         }
 
         return (
             <div>
-                <Bar
+                <Polar
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +82,4 @@ class GraficaTipo extends Component {
         );
     }
 }
-export default GraficaTipo;
+export default GraficaTipoClinicas;

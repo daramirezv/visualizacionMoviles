@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Pie } from 'react-chartjs-2';
+import { Polar } from 'react-chartjs-2';
 
-class GraficaCompletitud extends Component {
+class GraficaGeneroDoctores extends Component {
 
   constructor(props) {
     super(props);
@@ -13,15 +13,19 @@ class GraficaCompletitud extends Component {
     var arregloTemp = [];
     arregloTemp[0] = 0;
     arregloTemp[1] = 0;
-    this.props.objetosEjercicios.forEach(ejercicios => {
+    arregloTemp[2] = 0;
 
-      var num = ejercicios.data().completitud;
-      if (num === false) {
-        arregloTemp[1]++;
+    this.props.objetosDoctores.forEach(doctor => {
+
+      var num = doctor.data().Edad;
+      if (num < 35) {
+        arregloTemp[0]++;
       }
-      else {
-        arregloTemp[0]++
+      else if (num < 50) {
+        arregloTemp[1]++
       }
+      else
+        arregloTemp[2]++
     });
 
     this.setState({ valores: arregloTemp });
@@ -30,13 +34,13 @@ class GraficaCompletitud extends Component {
   render() {
 
     const data = {
-      labels: ["True", "False"],
+      labels: ["20-35 años", "36-50 años", "51+ años"],
       datasets: [{
         data: this.state.valores,
-        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)']
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)']
         ,
         borderColor:
-          ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)']
+          ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)']
         ,
         borderWidth: 1
 
@@ -57,7 +61,7 @@ class GraficaCompletitud extends Component {
       },
       title: {
         display: true,
-        text: 'Ejercicios Completados',
+        text: 'Edad de los Doctores',
         fontSize: 30,
         fontColor: '#000'
       },
@@ -66,7 +70,7 @@ class GraficaCompletitud extends Component {
 
     return (
       <div>
-        <Pie
+        <Polar
           data={data}
           width={100}
           height={500}
@@ -76,4 +80,4 @@ class GraficaCompletitud extends Component {
     );
   }
 }
-export default GraficaCompletitud;
+export default GraficaGeneroDoctores;

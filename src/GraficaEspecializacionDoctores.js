@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { HorizontalBar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-class GraficaCantidadRepeticiones extends Component {
+class GraficaEspecializacionDoctores extends Component {
 
   constructor(props) {
     super(props);
@@ -11,14 +11,14 @@ class GraficaCantidadRepeticiones extends Component {
 
   componentWillMount() {
     var arregloTemp = [];
-    this.props.objetosEjercicios.forEach(ejercicios => {
+    this.props.objetosDoctores.forEach(doctores => {
 
-      var num = ejercicios.data().repeticiones;
-      if (arregloTemp[num + " repeticiones"] == null) {
-        arregloTemp[num + " repeticiones"] = 1;
+      var num = doctores.data().Especializacion;
+      if (arregloTemp[num] == null) {
+        arregloTemp[num] = 1;
       }
       else {
-        arregloTemp[num + " repeticiones"] = arregloTemp[num + " repeticiones"] + 1;
+        arregloTemp[num] = arregloTemp[num] + 1;
       }
     });
 
@@ -62,7 +62,7 @@ class GraficaCantidadRepeticiones extends Component {
       },
       title: {
         display: true,
-        text: 'Cantidad de Repeticiones de los Ejercicios',
+        text: 'Especialidad de los Doctores',
         fontSize: 30,
         fontColor: '#000'
       },
@@ -78,7 +78,7 @@ class GraficaCantidadRepeticiones extends Component {
 
     return (
       <div>
-        <HorizontalBar
+        <Bar
           data={data}
           width={100}
           height={500}
@@ -88,4 +88,4 @@ class GraficaCantidadRepeticiones extends Component {
     );
   }
 }
-export default GraficaCantidadRepeticiones;
+export default GraficaEspecializacionDoctores;
