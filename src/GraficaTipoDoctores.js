@@ -32,10 +32,10 @@ class GraficaTipoDoctores extends Component {
             labels: Object.keys(this.state.valores),
             datasets: [{
                 data: Object.values(this.state.valores),
-                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)']
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)']
                 ,
                 borderColor:
-                    ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)']
+                    ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)']
                 ,
                 borderWidth: 1
 

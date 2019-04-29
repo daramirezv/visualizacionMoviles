@@ -33,10 +33,10 @@ class GraficaTipoClinicas extends Component {
             datasets: [{
                 data: Object.values(this.state.valores),
                 backgroundColor:
-                    ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)']
+                    ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)']
                 ,
                 borderColor:
-                    ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)']
+                    ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)', 'rgba(75, 192, 255, 1)']
                 ,
                 hoverBackgroundColor:
                     'rgba(54, 162, 235, 0.2)'
