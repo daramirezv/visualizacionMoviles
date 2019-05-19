@@ -21,7 +21,16 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { cargoEjercicios: false, cargoSitios: false, cargoDoctores: false, objetosEjercicios: [], objetosSitios: [], objetosDoctores: [] };
+    this.state = { mesActual: "", cambioEstado: false, dateBuscar: "", cargoEjercicios: false, cargoSitios: false, cargoDoctores: false, objetosEjercicios: [], objetosSitios: [], objetosDoctores: [] };
+    this.buscar = this.buscar.bind(this);
+    this.refMes = React.createRef();
+  }
+
+  buscar() {
+    const node = this.refMes.current;
+    if (this.state.dateBuscar !== node.value) {
+      this.setState({ dateBuscar: node.value, cambioEstado: true })
+    }
   }
 
   componentDidMount() {
@@ -38,9 +47,67 @@ class App extends Component {
 
     const db = firebase.firestore();
 
-    var docRefEjercicios = db.collection("ColeccionEjercicios").doc("Usuario1").collection("Ejercicios");
-    var docRefLocalizaciones = db.collection("ColeccionLocaciones").doc("Bogota").collection("Sitios");;
-    var docRefDoctores = db.collection("ColecciónDoctores").doc("Bogota").collection("Doctores");;
+    var fechaMin = "";
+    var fechaMax = "";
+
+    var temp = new Date();
+
+    if (temp.getMonth() === 12) {
+      fechaMin = "" + temp.getFullYear() + "-" + (temp.getMonth() + 1);
+      fechaMax = "" + (temp.getFullYear() + 1) + "-1";
+    }
+    else {
+      fechaMin = "" + temp.getFullYear() + "-" + (temp.getMonth() + 1);
+      fechaMax = "" + temp.getFullYear() + "-" + (temp.getMonth() + 2);
+    }
+
+    var dateBot = new Date(fechaMin);
+    var dateTop = new Date(fechaMax);
+
+    var respuesta = "";
+    switch (dateBot.getMonth()) {
+      case 0:
+        respuesta = "Enero del " + dateBot.getFullYear();
+        break;
+      case 1:
+        respuesta = "Febrero del " + dateBot.getFullYear();
+        break;
+      case 2:
+        respuesta = "Marzo del " + dateBot.getFullYear();
+        break;
+      case 3:
+        respuesta = "Abril del " + dateBot.getFullYear();
+        break;
+      case 4:
+        respuesta = "Mayo del " + dateBot.getFullYear();
+        break;
+      case 5:
+        respuesta = "Junio del " + dateBot.getFullYear();
+        break;
+      case 6:
+        respuesta = "Julio del " + dateBot.getFullYear();
+        break;
+      case 7:
+        respuesta = "Agosto del " + dateBot.getFullYear();
+        break;
+      case 8:
+        respuesta = "Septiembre del " + dateBot.getFullYear();
+        break;
+      case 9:
+        respuesta = "Octubre del " + dateBot.getFullYear();
+        break;
+      case 10:
+        respuesta = "Noviembre del " + dateBot.getFullYear();
+        break;
+      default:
+        respuesta = "Diciembre del " + dateBot.getFullYear();
+    }
+
+    this.setState({ mesActual: respuesta });
+
+    var docRefEjercicios = db.collection("ColeccionEjercicios").doc("Usuario1").collection("Ejercicios").where("creacion", ">=", dateBot.getTime()).where("creacion", "<", dateTop.getTime());
+    var docRefLocalizaciones = db.collection("ColeccionLocaciones").doc("Bogota").collection("Sitios");
+    var docRefDoctores = db.collection("ColecciónDoctores").doc("Bogota").collection("Doctores");
 
     docRefEjercicios
       .get()
@@ -85,6 +152,87 @@ class App extends Component {
       });
   }
 
+  componentDidUpdate() {
+    if (this.state.dateBuscar !== "" && this.state.cambioEstado) {
+
+      const db = firebase.firestore();
+
+      var dateFiltro = this.state.dateBuscar;
+
+      var fechaMin = "";
+      var fechaMax = "";
+
+      var temp = new Date(dateFiltro);
+
+      if (temp.getMonth === 12) {
+        fechaMin = "" + temp.getFullYear() + "-" + (temp.getMonth() + 1);
+        fechaMax = "" + (temp.getFullYear() + 1) + "-1";
+      }
+      else {
+        fechaMin = "" + temp.getFullYear() + "-" + (temp.getMonth() + 2);
+        fechaMax = "" + temp.getFullYear() + "-" + (temp.getMonth() + 3);
+      }
+
+      var dateBot = new Date(fechaMin);
+      var dateTop = new Date(fechaMax);
+
+      var respuesta = "";
+      switch (dateBot.getMonth()) {
+        case 0:
+          respuesta = "Enero del " + dateBot.getFullYear();
+          break;
+        case 1:
+          respuesta = "Febrero del " + dateBot.getFullYear();
+          break;
+        case 2:
+          respuesta = "Marzo del " + dateBot.getFullYear();
+          break;
+        case 3:
+          respuesta = "Abril del " + dateBot.getFullYear();
+          break;
+        case 4:
+          respuesta = "Mayo del " + dateBot.getFullYear();
+          break;
+        case 5:
+          respuesta = "Junio del " + dateBot.getFullYear();
+          break;
+        case 6:
+          respuesta = "Julio del " + dateBot.getFullYear();
+          break;
+        case 7:
+          respuesta = "Agosto del " + dateBot.getFullYear();
+          break;
+        case 8:
+          respuesta = "Septiembre del " + dateBot.getFullYear();
+          break;
+        case 9:
+          respuesta = "Octubre del " + dateBot.getFullYear();
+          break;
+        case 10:
+          respuesta = "Noviembre del " + dateBot.getFullYear();
+          break;
+        default:
+          respuesta = "Diciembre del " + dateBot.getFullYear();
+      }
+
+      var docRefEjercicios = db.collection("ColeccionEjercicios").doc("Usuario1").collection("Ejercicios").where("creacion", ">=", dateBot.getTime()).where("creacion", "<", dateTop.getTime());
+
+      docRefEjercicios
+        .get()
+        .then(function (querySnapshot) {
+          var arregloObjetos = [];
+          querySnapshot.forEach(function (doc) {
+            arregloObjetos.push(doc);
+            //console.log(doc.id, " => ", doc.data());
+          });
+          this.setState({ objetosEjercicios: arregloObjetos, cambioEstado: false, mesActual: respuesta });
+        }.bind(this))
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
+  }
+
   render() {
 
     return (
@@ -92,6 +240,14 @@ class App extends Component {
         {this.state.cargoSitios && this.state.cargoEjercicios && this.state.cargoDoctores ?
           <div>
             <h1 className="jumbotron" id="titulo">FisiApp</h1>
+
+            <h3 id="fecha" className="tituloMes" >Datos para {this.state.mesActual}</h3>
+
+            <h3 id="mesAnalisis">Cambiar mes de análisis</h3>
+
+            <input type="month" className="mes" ref={this.refMes} name="monthandyear" ></input>
+            <button type="button" className="mes" onClick={this.buscar} className="btn btn-primary">Filtrar</button>
+
             <div className="row">
               <div className="col-sm">
                 <table className="table table-striped">

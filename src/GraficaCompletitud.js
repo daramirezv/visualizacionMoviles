@@ -6,7 +6,7 @@ class GraficaCompletitud extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { titulos: [], valores: [] }
+    this.state = { titulos: [], valores: [], propsQueLlegan: [] }
   }
 
   componentWillMount() {
@@ -24,7 +24,28 @@ class GraficaCompletitud extends Component {
       }
     });
 
-    this.setState({ valores: arregloTemp });
+    this.setState({ valores: arregloTemp, propsQueLlegan: this.props.objetosEjercicios });
+  }
+
+
+  componentDidUpdate() {
+    if (this.state.propsQueLlegan !== this.props.objetosEjercicios) {
+      var arregloTemp = [];
+      arregloTemp[0] = 0;
+      arregloTemp[1] = 0;
+      this.props.objetosEjercicios.forEach(ejercicios => {
+
+        var num = ejercicios.data().completitud;
+        if (num === false) {
+          arregloTemp[1]++;
+        }
+        else {
+          arregloTemp[0]++
+        }
+      });
+
+      this.setState({ valores: arregloTemp, propsQueLlegan: this.props.objetosEjercicios });
+    }
   }
 
   render() {

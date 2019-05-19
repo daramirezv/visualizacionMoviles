@@ -6,7 +6,7 @@ class GraficaTipo extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titulos: [], valores: [] }
+        this.state = { titulos: [], valores: [], propsQueLlegan: [] }
     }
 
     componentWillMount() {
@@ -23,7 +23,26 @@ class GraficaTipo extends Component {
             }
         });
 
-        this.setState({ valores: arregloTemp });
+        this.setState({ valores: arregloTemp, propsQueLlegan: this.props.objetosEjercicios });
+    }
+
+    componentDidUpdate() {
+        if (this.state.propsQueLlegan !== this.props.objetosEjercicios) {
+            var arregloTemp = [];
+            this.props.objetosEjercicios.forEach(ejercicios => {
+
+                var num = ejercicios.data().tipo;
+
+                if (arregloTemp[num] == null) {
+                    arregloTemp[num] = 1;
+                }
+                else {
+                    arregloTemp[num] = arregloTemp[num] + 1;
+                }
+            });
+
+            this.setState({ valores: arregloTemp, propsQueLlegan: this.props.objetosEjercicios });
+        }
     }
 
     render() {

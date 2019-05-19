@@ -6,7 +6,7 @@ class GraficaCantidadRepeticiones extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { titulos: [], valores: [] }
+    this.state = { titulos: [], valores: [], propsQueLlegan: [] }
   }
 
   componentWillMount() {
@@ -22,7 +22,25 @@ class GraficaCantidadRepeticiones extends Component {
       }
     });
 
-    this.setState({ valores: arregloTemp });
+    this.setState({ valores: arregloTemp, propsQueLlegan: this.props.objetosEjercicios });
+  }
+
+  componentDidUpdate() {
+    if (this.state.propsQueLlegan !== this.props.objetosEjercicios) {
+      var arregloTemp = [];
+      this.props.objetosEjercicios.forEach(ejercicios => {
+
+        var num = ejercicios.data().repeticiones;
+        if (arregloTemp[num + " repeticiones"] == null) {
+          arregloTemp[num + " repeticiones"] = 1;
+        }
+        else {
+          arregloTemp[num + " repeticiones"] = arregloTemp[num + " repeticiones"] + 1;
+        }
+      });
+
+      this.setState({ valores: arregloTemp, propsQueLlegan: this.props.objetosEjercicios });
+    }
   }
 
   render() {

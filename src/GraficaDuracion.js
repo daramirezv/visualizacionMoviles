@@ -6,7 +6,7 @@ class GraficaDuracion extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titulos: [], valores: [] }
+        this.state = { titulos: [], valores: [], propsQueLlegan: [] }
     }
 
 
@@ -39,7 +39,41 @@ class GraficaDuracion extends Component {
             solucion.push(new objeto(element, arregloTemp[element], 15));
         });
 
-        this.setState({ valores: solucion });
+        this.setState({ valores: solucion, propsQueLlegan: this.props.objetosEjercicios });
+    }
+
+    componentDidUpdate() {
+        if (this.state.propsQueLlegan !== this.props.objetosEjercicios) {
+            var arregloTemp = [];
+            this.props.objetosEjercicios.forEach(ejercicios => {
+
+                var num = ejercicios.data().duracion;
+
+                if (arregloTemp[num] == null) {
+                    arregloTemp[num] = 1;
+                }
+                else {
+                    arregloTemp[num] = arregloTemp[num] + 1;
+                }
+            });
+
+            var objeto = class myObject {
+                constructor(x, y, r) {
+                    this.x = x;
+                    this.y = y;
+                    this.r = r;
+                }
+            }
+
+            var solucion = [];
+            var arrayValores = Object.keys(arregloTemp);
+
+            arrayValores.forEach(element => {
+                solucion.push(new objeto(element, arregloTemp[element], 15));
+            });
+
+            this.setState({ valores: solucion, propsQueLlegan: this.props.objetosEjercicios });
+        }
     }
 
     render() {

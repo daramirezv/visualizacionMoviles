@@ -6,83 +6,88 @@ class GraficaDate extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titulos: [], valores: [] }
+        this.state = { valores: [], propsQueLlegan: [] }
     }
 
     componentWillMount() {
-        var arregloTemp = [];
+
+        var arregloMes = [];
+        arregloMes["0-5"] = 0;
+        arregloMes["6-10"] = 0;
+        arregloMes["11-15"] = 0;
+        arregloMes["16-20"] = 0;
+        arregloMes["21-25"] = 0;
+        arregloMes["25+"] = 0;
+
         this.props.objetosEjercicios.forEach(ejercicios => {
 
             var num = ejercicios.data().creacion;
             var dia = new Date(num);
 
-            if (arregloTemp["mes " + (dia.getMonth() + 1)] == null) {
-                arregloTemp["mes " + (dia.getMonth() + 1)] = 1;
+            if (dia.getDate() < 6) {
+                arregloMes["0-5"]++;
+            }
+            else if (dia.getDate() < 11) {
+                arregloMes["6-10"]++;
+            }
+            else if (dia.getDate() < 16) {
+                arregloMes["11-15"]++;
+            }
+            else if (dia.getDate() < 21) {
+                arregloMes["16-20"]++;
+            }
+            else if (dia.getDate() < 26) {
+                arregloMes["21-25"]++;
             }
             else {
-                arregloTemp["mes " + (dia.getMonth() + 1)] = arregloTemp["mes " + (dia.getMonth() + 1)] + 1;
+                arregloMes["25+"]++;
             }
         });
 
-        var arregloMes = [];
-        arregloMes["Enero"] = 0;
-        arregloMes["Febrero"] = 0;
-        arregloMes["Marzo"] = 0;
-        arregloMes["Abril"] = 0;
-        arregloMes["Mayo"] = 0;
-        arregloMes["Junio"] = 0;
-        arregloMes["Julio"] = 0;
-        arregloMes["Agosto"] = 0;
-        arregloMes["Septiembre"] = 0;
-        arregloMes["Octubre"] = 0;
-        arregloMes["Noviembre"] = 0;
-        arregloMes["Diciembre"] = 0;
+        arregloMes.sort();
 
-        for (var x = 1; x < 13; x++) {
-            if (arregloTemp["mes " + x] != null) {
-                switch ("mes " + x) {
-                    case "mes 1":
-                        arregloMes["Enero"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 2":
-                        arregloMes["Febrero"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 3":
-                        arregloMes["Marzo"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 4":
-                        arregloMes["Abril"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 5":
-                        arregloMes["Mayo"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 6":
-                        arregloMes["Junio"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 7":
-                        arregloMes["Julio"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 8":
-                        arregloMes["Agosto"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 9":
-                        arregloMes["Septiembre"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 10":
-                        arregloMes["Octubre"] = arregloTemp["mes " + x];
-                        break;
-                    case "mes 11":
-                        arregloMes["Noviembre"] = arregloTemp["mes " + x];
-                        break;
-                    default:
-                        arregloMes["Diciembre"] = arregloTemp["mes " + x];
+        this.setState({ valores: arregloMes, propsQueLlegan: this.props.objetosEjercicios });
+    }
+
+    componentDidUpdate() {
+        if (this.state.propsQueLlegan !== this.props.objetosEjercicios) {
+            var arregloMes = [];
+            arregloMes["0-5"] = 0;
+            arregloMes["6-10"] = 0;
+            arregloMes["11-15"] = 0;
+            arregloMes["16-20"] = 0;
+            arregloMes["21-25"] = 0;
+            arregloMes["25+"] = 0;
+
+            this.props.objetosEjercicios.forEach(ejercicios => {
+
+                var num = ejercicios.data().creacion;
+                var dia = new Date(num);
+
+                if (dia.getDate() < 6) {
+                    arregloMes["0-5"]++;
                 }
-            }
+                else if (dia.getDate() < 11) {
+                    arregloMes["6-10"]++;
+                }
+                else if (dia.getDate() < 16) {
+                    arregloMes["11-15"]++;
+                }
+                else if (dia.getDate() < 21) {
+                    arregloMes["16-20"]++;
+                }
+                else if (dia.getDate() < 26) {
+                    arregloMes["21-25"]++;
+                }
+                else {
+                    arregloMes["25+"]++;
+                }
+            });
+
+            arregloMes.sort();
+
+            this.setState({ valores: arregloMes, propsQueLlegan: this.props.objetosEjercicios });
         }
-
-        arregloTemp.sort();
-
-        this.setState({ valores: arregloMes });
     }
 
     render() {
@@ -114,7 +119,7 @@ class GraficaDate extends Component {
             },
             title: {
                 display: true,
-                text: 'Ejercicios Publicados por Mes',
+                text: 'Ejercicios en los días del mes',
                 fontSize: 30,
                 fontColor: '#000'
             },
