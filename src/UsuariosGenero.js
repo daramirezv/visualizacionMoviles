@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class UsuariosGenero extends Component {
 
     constructor(props) {
         super(props);
@@ -11,15 +11,16 @@ class GraficaPrecioClinicas extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
+        arregloTemp[0] = 0;
+        arregloTemp[1] = 0;
+        this.props.objetosUsuarios.forEach(usuario => {
 
-            var num = sitios.data().precio;
-
-            if (arregloTemp[num] == null) {
-                arregloTemp[num] = 1;
+            var num = usuario.data().Género;
+            if (num === "Masculino") {
+                arregloTemp[1]++;
             }
             else {
-                arregloTemp[num] = arregloTemp[num] + 1;
+                arregloTemp[0]++
             }
         });
 
@@ -29,20 +30,13 @@ class GraficaPrecioClinicas extends Component {
     render() {
 
         const data = {
-            labels: Object.keys(this.state.valores),
+            labels: ["Femenino", "Masculino"],
             datasets: [{
-                data: Object.values(this.state.valores),
-                backgroundColor:
-                    'rgba(100, 159, 64, 0.2)'
+                data: this.state.valores,
+                backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(54, 162, 235, 0.2)']
                 ,
                 borderColor:
-                    'rgba(100, 159, 64, 1)'
-                ,
-                hoverBackgroundColor:
-                    'rgba(54, 162, 235, 0.2)'
-                ,
-                hoverBorderColor:
-                    'rgba(54, 162, 235, 1)'
+                    ['rgba(255, 159, 64, 1)', 'rgba(54, 162, 235, 1)']
                 ,
                 borderWidth: 1
 
@@ -63,23 +57,16 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Género de los Usuarios',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            maintainAspectRatio: false
         }
 
         return (
             <div>
-                <Bar
+                <Pie
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +76,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default UsuariosGenero;

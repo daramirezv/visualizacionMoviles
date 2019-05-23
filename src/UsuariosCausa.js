@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Polar } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class UsuariosEdad extends Component {
 
     constructor(props) {
         super(props);
@@ -11,9 +11,10 @@ class GraficaPrecioClinicas extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
 
-            var num = sitios.data().precio;
+        this.props.objetosUsuarios.forEach(usuario => {
+
+            var num = usuario.data().Causa;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -21,28 +22,20 @@ class GraficaPrecioClinicas extends Component {
             else {
                 arregloTemp[num] = arregloTemp[num] + 1;
             }
-        });
 
-        this.setState({ valores: arregloTemp });
+            this.setState({ valores: arregloTemp });
+        })
     }
-
     render() {
 
         const data = {
             labels: Object.keys(this.state.valores),
             datasets: [{
                 data: Object.values(this.state.valores),
-                backgroundColor:
-                    'rgba(100, 159, 64, 0.2)'
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(100, 159, 64, 0.2)']
                 ,
                 borderColor:
-                    'rgba(100, 159, 64, 1)'
-                ,
-                hoverBackgroundColor:
-                    'rgba(54, 162, 235, 0.2)'
-                ,
-                hoverBorderColor:
-                    'rgba(54, 162, 235, 1)'
+                    ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(100, 159, 64, 1)']
                 ,
                 borderWidth: 1
 
@@ -63,23 +56,16 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Causas de las Lesiones',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            maintainAspectRatio: false
         }
 
         return (
             <div>
-                <Bar
+                <Polar
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +75,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default UsuariosEdad;

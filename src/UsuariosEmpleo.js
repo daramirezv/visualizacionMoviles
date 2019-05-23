@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class UsuariosEmpleo extends Component {
 
     constructor(props) {
         super(props);
@@ -11,10 +11,9 @@ class GraficaPrecioClinicas extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
+        this.props.objetosUsuarios.forEach(usuarios => {
 
-            var num = sitios.data().precio;
-
+            var num = usuarios.data().Empleo;
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
             }
@@ -63,13 +62,13 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Profesión de los Usuarios',
                 fontSize: 30,
                 fontColor: '#000'
             },
             maintainAspectRatio: false,
             scales: {
-                yAxes: [{
+                xAxes: [{
                     ticks: {
                         beginAtZero: true
                     }
@@ -79,7 +78,7 @@ class GraficaPrecioClinicas extends Component {
 
         return (
             <div>
-                <Bar
+                <HorizontalBar
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +88,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default UsuariosEmpleo;

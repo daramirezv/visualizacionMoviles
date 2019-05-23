@@ -53,10 +53,10 @@ class GraficaParteCuerpo extends Component {
             datasets: [{
                 data: Object.values(this.state.valores),
                 backgroundColor:
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgba(100, 159, 64, 0.2)'
                 ,
                 borderColor:
-                    'rgba(255, 99, 132, 1)'
+                    'rgba(100, 159, 64, 1)'
                 ,
                 hoverBackgroundColor:
                     'rgba(54, 162, 235, 0.2)'

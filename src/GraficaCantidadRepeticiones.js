@@ -86,7 +86,7 @@ class GraficaCantidadRepeticiones extends Component {
       },
       maintainAspectRatio: false,
       scales: {
-        yAxes: [{
+        xAxes: [{
           ticks: {
             beginAtZero: true
           }

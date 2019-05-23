@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import './App.css';
 import { Bar } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class GraficaCiudadDoctores extends Component {
 
     constructor(props) {
         super(props);
@@ -11,9 +11,9 @@ class GraficaPrecioClinicas extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
+        this.props.objetosDoctores.forEach(doctor => {
 
-            var num = sitios.data().precio;
+            var num = doctor.data().Ciudad;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -33,10 +33,10 @@ class GraficaPrecioClinicas extends Component {
             datasets: [{
                 data: Object.values(this.state.valores),
                 backgroundColor:
-                    'rgba(100, 159, 64, 0.2)'
+                    'rgba(255, 99, 132, 0.2)'
                 ,
                 borderColor:
-                    'rgba(100, 159, 64, 1)'
+                    'rgba(255, 99, 132, 1)'
                 ,
                 hoverBackgroundColor:
                     'rgba(54, 162, 235, 0.2)'
@@ -63,7 +63,7 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Ciudades de los Doctores',
                 fontSize: 30,
                 fontColor: '#000'
             },
@@ -89,4 +89,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default GraficaCiudadDoctores;

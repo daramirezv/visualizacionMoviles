@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Polar } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class GraficaDoctoresClinicas extends Component {
 
     constructor(props) {
         super(props);
@@ -11,16 +11,21 @@ class GraficaPrecioClinicas extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
+        arregloTemp[0] = 0;
+        arregloTemp[1] = 0;
+        arregloTemp[2] = 0;
 
-            var num = sitios.data().precio;
+        this.props.objetosSitios.forEach(sitio => {
 
-            if (arregloTemp[num] == null) {
-                arregloTemp[num] = 1;
+            var num = sitio.data().Doctores;
+            if (num < 25) {
+                arregloTemp[0]++;
             }
-            else {
-                arregloTemp[num] = arregloTemp[num] + 1;
+            else if (num < 35) {
+                arregloTemp[1]++
             }
+            else
+                arregloTemp[2]++
         });
 
         this.setState({ valores: arregloTemp });
@@ -29,20 +34,13 @@ class GraficaPrecioClinicas extends Component {
     render() {
 
         const data = {
-            labels: Object.keys(this.state.valores),
+            labels: ["Menos de 25 Doctores", "Entre 25 y 35 Doctores", "Más de 35 Doctores"],
             datasets: [{
-                data: Object.values(this.state.valores),
-                backgroundColor:
-                    'rgba(100, 159, 64, 0.2)'
+                data: this.state.valores,
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)']
                 ,
                 borderColor:
-                    'rgba(100, 159, 64, 1)'
-                ,
-                hoverBackgroundColor:
-                    'rgba(54, 162, 235, 0.2)'
-                ,
-                hoverBorderColor:
-                    'rgba(54, 162, 235, 1)'
+                    ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)']
                 ,
                 borderWidth: 1
 
@@ -63,23 +61,16 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Cantidad de Doctores en las Clínicas',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            maintainAspectRatio: false
         }
 
         return (
             <div>
-                <Bar
+                <Polar
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +80,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default GraficaDoctoresClinicas;

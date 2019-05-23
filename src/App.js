@@ -16,12 +16,26 @@ import GraficaEspecializacionDoctores from './GraficaEspecializacionDoctores';
 import GraficaGeneroDoctores from './GraficaGeneroDoctores';
 import GraficaEdadDoctores from './GraficaEdadDoctores';
 import GraficaTipoDoctores from './GraficaTipoDoctores';
+import GraficaCiudadDoctores from './GraficaCiudadDoctores';
+import GraficaAtiendeDoctores from './GraficaAtiendeDoctores';
+import UsuariosTabla from './UsuariosTabla';
+import UsuariosEdad from "./UsuariosEdad";
+import UsuariosGenero from "./UsuariosGenero";
+import UsuariosCiudad from "./UsuariosCiudad";
+import UsuariosCausa from "./UsuariosCausa";
+import UsuariosClinica from "./UsuariosClinica";
+import UsuariosEmpleo from "./UsuariosEmpleo";
+import UsuariosProblema from "./UsuariosProblema";
+import UsuariosCita from "./UsuariosCita";
+import GraficaCiudadClinicas from "./GraficaCiudadClinicas";
+import GraficaDoctoresClinicas from "./GraficaDoctoresClinicas";
+import GraficaJornadaClinicas from "./GraficaJornadaClinicas";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { mesActual: "", cambioEstado: false, dateBuscar: "", cargoEjercicios: false, cargoSitios: false, cargoDoctores: false, objetosEjercicios: [], objetosSitios: [], objetosDoctores: [] };
+    this.state = { mesActual: "", cambioEstado: false, dateBuscar: "", cargoEjercicios: false, cargoSitios: false, cargoDoctores: false, cargoUsuarios: false, objetosEjercicios: [], objetosUsuarios: [], objetosSitios: [], objetosDoctores: [] };
     this.buscar = this.buscar.bind(this);
     this.refMes = React.createRef();
   }
@@ -108,6 +122,7 @@ class App extends Component {
     var docRefEjercicios = db.collection("ColeccionEjercicios").doc("Usuario1").collection("Ejercicios").where("creacion", ">=", dateBot.getTime()).where("creacion", "<", dateTop.getTime());
     var docRefLocalizaciones = db.collection("ColeccionLocaciones").doc("Bogota").collection("Sitios");
     var docRefDoctores = db.collection("ColecciónDoctores").doc("Bogota").collection("Doctores");
+    var docRefUsuarios = db.collection("ColeccionUsuarios");
 
     docRefEjercicios
       .get()
@@ -146,6 +161,20 @@ class App extends Component {
           //console.log(doc.id, " => ", doc.data());
         });
         this.setState({ objetosDoctores: arregloObjetos, cargoDoctores: true });
+      }.bind(this))
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+
+    docRefUsuarios
+      .get()
+      .then(function (querySnapshot) {
+        var arregloObjetos = [];
+        querySnapshot.forEach(function (doc) {
+          arregloObjetos.push(doc);
+          //console.log(doc.id, " => ", doc.data());
+        });
+        this.setState({ objetosUsuarios: arregloObjetos, cargoUsuarios: true });
       }.bind(this))
       .catch(function (error) {
         console.log("Error getting documents: ", error);
@@ -237,7 +266,7 @@ class App extends Component {
 
     return (
       <div className="col-md-12">
-        {this.state.cargoSitios && this.state.cargoEjercicios && this.state.cargoDoctores ?
+        {this.state.cargoUsuarios && this.state.cargoSitios && this.state.cargoEjercicios && this.state.cargoDoctores ?
           <div>
             <h1 className="jumbotron" id="titulo">FisiApp</h1>
 
@@ -246,7 +275,7 @@ class App extends Component {
             <h3 id="mesAnalisis">Cambiar mes de análisis</h3>
 
             <input type="month" className="mes" ref={this.refMes} name="monthandyear" ></input>
-            <button type="button" className="mes" onClick={this.buscar} className="btn btn-primary">Filtrar</button>
+            <button type="button" className="mes btn btn-primary" onClick={this.buscar}>Filtrar</button>
 
             <div className="row">
               <div className="col-sm">
@@ -323,6 +352,18 @@ class App extends Component {
               <div className="col-sm">
                 <GraficaTipoClinicas objetosSitios={this.state.objetosSitios} />
               </div>
+              <div className="col-sm">
+                <GraficaCiudadClinicas objetosSitios={this.state.objetosSitios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <GraficaDoctoresClinicas objetosSitios={this.state.objetosSitios} />
+              </div>
+              <div className="col-sm">
+                <GraficaJornadaClinicas objetosSitios={this.state.objetosSitios} />
+              </div>
             </div>
 
             <div className="row">
@@ -342,10 +383,61 @@ class App extends Component {
 
             <div className="row">
               <div className="col-sm">
-                <GraficaEdadDoctores objetosDoctores={this.state.objetosDoctores} />
+                <GraficaCiudadDoctores objetosDoctores={this.state.objetosDoctores} />
               </div>
               <div className="col-sm">
                 <GraficaTipoDoctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <GraficaEdadDoctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+              <div className="col-sm">
+                <GraficaAtiendeDoctores objetosDoctores={this.state.objetosDoctores} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <UsuariosTabla objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <UsuariosEdad objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+              <div className="col-sm">
+                <UsuariosGenero objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <UsuariosCiudad objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+              <div className="col-sm">
+                <UsuariosCausa objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <UsuariosClinica objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+              <div className="col-sm">
+                <UsuariosEmpleo objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm">
+                <UsuariosProblema objetosUsuarios={this.state.objetosUsuarios} />
+              </div>
+              <div className="col-sm">
+                <UsuariosCita objetosUsuarios={this.state.objetosUsuarios} />
               </div>
             </div>
 

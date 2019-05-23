@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class UsuariosClinica extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titulos: [], valores: [] }
+        this.state = { valores: [] }
     }
 
     componentWillMount() {
-        var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
 
-            var num = sitios.data().precio;
+        var arregloTemp = [];
+
+        this.props.objetosUsuarios.forEach(usuarios => {
+
+            var num = usuarios.data().Clínica;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -26,26 +28,19 @@ class GraficaPrecioClinicas extends Component {
         this.setState({ valores: arregloTemp });
     }
 
+
     render() {
 
         const data = {
             labels: Object.keys(this.state.valores),
             datasets: [{
                 data: Object.values(this.state.valores),
-                backgroundColor:
-                    'rgba(100, 159, 64, 0.2)'
-                ,
                 borderColor:
-                    'rgba(100, 159, 64, 1)'
+                    'rgba(255, 99, 132, 1)'
                 ,
-                hoverBackgroundColor:
-                    'rgba(54, 162, 235, 0.2)'
-                ,
-                hoverBorderColor:
-                    'rgba(54, 162, 235, 1)'
-                ,
-                borderWidth: 1
-
+                fill: false,
+                lineTension:
+                    0.1
             }]
         }
 
@@ -63,7 +58,7 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Clínicas Frecuentadas',
                 fontSize: 30,
                 fontColor: '#000'
             },
@@ -79,7 +74,7 @@ class GraficaPrecioClinicas extends Component {
 
         return (
             <div>
-                <Bar
+                <Line
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +84,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default UsuariosClinica;

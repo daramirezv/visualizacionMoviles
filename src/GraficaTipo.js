@@ -52,10 +52,10 @@ class GraficaTipo extends Component {
             datasets: [{
                 data: Object.values(this.state.valores),
                 backgroundColor:
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgba(153, 102, 255, 0.2)'
                 ,
                 borderColor:
-                    'rgba(255, 99, 132, 1)'
+                    'rgba(153, 102, 255, 1)'
                 ,
                 hoverBackgroundColor:
                     'rgba(54, 162, 235, 0.2)'

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
-class GraficaPrecioClinicas extends Component {
+class UsuariosProblema extends Component {
 
     constructor(props) {
         super(props);
@@ -11,9 +11,9 @@ class GraficaPrecioClinicas extends Component {
 
     componentWillMount() {
         var arregloTemp = [];
-        this.props.objetosSitios.forEach(sitios => {
+        this.props.objetosUsuarios.forEach(usuario => {
 
-            var num = sitios.data().precio;
+            var num = usuario.data().Problema;
 
             if (arregloTemp[num] == null) {
                 arregloTemp[num] = 1;
@@ -32,17 +32,10 @@ class GraficaPrecioClinicas extends Component {
             labels: Object.keys(this.state.valores),
             datasets: [{
                 data: Object.values(this.state.valores),
-                backgroundColor:
-                    'rgba(100, 159, 64, 0.2)'
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)']
                 ,
                 borderColor:
-                    'rgba(100, 159, 64, 1)'
-                ,
-                hoverBackgroundColor:
-                    'rgba(54, 162, 235, 0.2)'
-                ,
-                hoverBorderColor:
-                    'rgba(54, 162, 235, 1)'
+                    ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)']
                 ,
                 borderWidth: 1
 
@@ -63,23 +56,16 @@ class GraficaPrecioClinicas extends Component {
             },
             title: {
                 display: true,
-                text: 'Precio de las Fisioterapeutas',
+                text: 'Aflicciones de los Usuarios',
                 fontSize: 30,
                 fontColor: '#000'
             },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
+            maintainAspectRatio: false
         }
 
         return (
             <div>
-                <Bar
+                <Doughnut
                     data={data}
                     width={100}
                     height={500}
@@ -89,4 +75,4 @@ class GraficaPrecioClinicas extends Component {
         );
     }
 }
-export default GraficaPrecioClinicas;
+export default UsuariosProblema;
